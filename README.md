@@ -1,8 +1,16 @@
-# NEXORA — Enterprise Project Management & Collaboration Platform
+# NEXORA — Project Management & Collaboration Platform
 
-Nexora is a full-stack, enterprise-grade project management and team collaboration platform designed for modern product and software engineering teams. Built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, and Socket.IO, Nexora provides real-time task synchronization, strict Role-Based Access Control (RBAC), database-driven executive analytics, and a dark SaaS visual design system.
+Nexora is a full-stack, production-ready project management and team collaboration platform designed for modern product and software engineering teams. Built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, and Socket.IO, Nexora provides real-time task synchronization, strict Role-Based Access Control (RBAC), database-driven executive analytics, and a dark SaaS visual design system.
 
 Developed for the **CodeAlpha Full Stack Development Internship**.
+
+---
+
+## 🔗 Project Links
+
+- **GitHub Repository:** https://github.com/pk7745/CodeAlpha_Nexora
+- **Live Demo:** Add the Render URL after deployment.
+- **API Health:** Add the deployed `/health` URL after deployment.
 
 ---
 
@@ -116,7 +124,7 @@ The database is powered by **PostgreSQL** and managed via **Prisma ORM**.
 - `Notification`: User notifications with read/unread flags.
 - `Activity`: Project activity audit logs.
 
-Migrations are version-controlled in [`server/prisma/migrations/`](file:///c:/Users/pky45/Downloads/stitch_nexora_project_management_platform/server/prisma/migrations/):
+Migrations are version-controlled in [`server/prisma/migrations/`](server/prisma/migrations/):
 ```bash
 # Execute migrations on deployment
 npx prisma migrate deploy
@@ -127,7 +135,7 @@ npx prisma migrate deploy
 ## 📁 Project Structure
 
 ```text
-stitch_nexora_project_management_platform/
+CodeAlpha_Nexora/
 ├── package.json                   # Monorepo root scripts (build, start, test)
 ├── .gitignore                     # Git exclusion rules (.env, node_modules, dist)
 ├── .env.example                   # Environment variable template
@@ -187,10 +195,12 @@ Copy `.env.example` to `.env` in root and `server/`:
 ```env
 PORT=5000
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nexora_db?schema=public"
-JWT_SECRET="nexora_super_secret_jwt_key_2026"
+JWT_SECRET="your_local_development_jwt_secret"
 CORS_ORIGIN="http://localhost:5173"
 NODE_ENV="development"
 ```
+
+Use a unique secret for local development. Never commit production secrets.
 
 ### 3. Database Migration & Seed
 ```bash
@@ -224,6 +234,8 @@ npm run dev
 | **Admin** | `admin@nexora.io` | `Password123!` | Task CRUD & member management |
 | **Member** | `member@nexora.io` | `Password123!` | Task creation, status updates, commenting |
 | **Viewer** | `viewer@nexora.io` | `Password123!` | Read-only access (Mutations return 403) |
+
+> These credentials are intended for local/demo testing only and must not be reused as production credentials.
 
 ---
 
@@ -260,7 +272,7 @@ npm run build
 
 ## ☁️ Render Single-Service Deployment Guide
 
-Nexora is configured to deploy on **Render** as a single Web Service backed by Render PostgreSQL.
+Nexora is configured to deploy on **Render** as a single Web Service backed by Render PostgreSQL using [`render.yaml`](render.yaml).
 
 ### Render Configuration Summary
 - **Service Type**: Web Service
@@ -273,10 +285,12 @@ Nexora is configured to deploy on **Render** as a single Web Service backed by R
 ```env
 DATABASE_URL=postgresql://nexora_user:PASSWORD@dpg-xxx-a.render.com/nexora_db
 JWT_SECRET=your_production_jwt_secret_key
-CORS_ORIGIN=https://nexora-app.onrender.com
+CORS_ORIGIN=https://YOUR-RENDER-SERVICE.onrender.com
 NODE_ENV=production
 PORT=10000
 ```
+
+> Replace this placeholder with the actual URL assigned to your Render Web Service after deployment.
 
 ---
 
@@ -286,7 +300,7 @@ PORT=10000
 | :--- | :--- | :--- |
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://USER:PASSWORD@HOST:5432/DB` |
 | `JWT_SECRET` | Secret key for JWT signing | `YOUR_PRODUCTION_JWT_SECRET_KEY` |
-| `CORS_ORIGIN` | Allowed origin for CORS & Socket.IO | `http://localhost:5173` |
+| `CORS_ORIGIN` | Allowed origin for CORS & Socket.IO | `https://YOUR-RENDER-SERVICE.onrender.com` |
 | `NODE_ENV` | Environment mode (`development`/`production`) | `production` |
 | `PORT` | HTTP server port | `5000` |
 
@@ -300,7 +314,7 @@ PORT=10000
 - **Prisma Migrations**: **PASS** (`1 migration applied cleanly`)
 - **Automated Test Suite**: **PASS** (`19/19 Vitest integration tests passed`)
 - **Socket.IO Real-Time Engine**: **PASS**
-- **Render Configuration**: **READY** ([`render.yaml`](file:///c:/Users/pky45/Downloads/stitch_nexora_project_management_platform/render.yaml))
+- **Render Configuration**: **READY** ([`render.yaml`](render.yaml))
 
 ---
 
@@ -309,7 +323,7 @@ PORT=10000
 This project was built as part of the **CodeAlpha Full Stack Development Internship**.
 
 - **Primary Requirement**: Full-stack project management platform with authentication, PostgreSQL database, project/task CRUD, and RBAC permissions.
-- **Bonus Requirement Achieved**: Real-time collaboration updates using Socket.IO / WebSockets.
+- **Bonus Requirement Achieved**: Real-time updates and in-app notifications using Socket.IO / WebSockets.
 
 ---
 
@@ -324,6 +338,7 @@ This project was built as part of the **CodeAlpha Full Stack Development Interns
 
 ## 👨‍💻 Author
 
-**Pavan Kumar S**  
-- GitHub: [https://github.com/pk7745](https://github.com/pk7745)  
-- Repository: [https://github.com/pk7745/CodeAlpha_Nexora](https://github.com/pk7745/CodeAlpha_Nexora)
+**Pavan Kumar S**
+
+- GitHub: https://github.com/pk7745
+- Repository: https://github.com/pk7745/CodeAlpha_Nexora
