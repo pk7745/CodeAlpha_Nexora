@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: nexora-web-service
+    env: node
+    plan: free
+    buildCommand: npm install && cd server && npm install && cd ../client && npm install && cd .. && npm run build && cd server && npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexora-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+
+databases:
+  - name: nexora-postgres
+    plan: free
+    databaseName: nexora_db
+    user: nexora_user
