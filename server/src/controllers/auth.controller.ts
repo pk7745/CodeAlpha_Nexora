@@ -64,6 +64,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const parseResult = loginSchema.safeParse(req.body);
     if (!parseResult.success) {
+      console.log('[AUTH_DEBUG] POST /api/auth/login - validationFailed=true');
       return res.status(400).json({ error: parseResult.error.errors[0].message });
     }
 
@@ -71,15 +72,19 @@ export const login = async (req: Request, res: Response) => {
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
+      console.log('[AUTH_DEBUG] POST /api/auth/login - emailReceived=true, userFound=false, passwordMatch=false, jwtGenerated=false');
       return res.status(401).json({ error: 'Invalid email or password credentials.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
+      console.log('[AUTH_DEBUG] POST /api/auth/login - emailReceived=true, userFound=true, passwordMatch=false, jwtGenerated=false');
       return res.status(401).json({ error: 'Invalid email or password credentials.' });
     }
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN as any });
+
+    console.log('[AUTH_DEBUG] POST /api/auth/login - emailReceived=true, userFound=true, passwordMatch=true, jwtGenerated=true');
 
     return res.status(200).json({
       user: {
@@ -92,6 +97,7 @@ export const login = async (req: Request, res: Response) => {
       token,
     });
   } catch (err) {
+    console.error('[AUTH_DEBUG] POST /api/auth/login - internalError:', err);
     return res.status(500).json({ error: 'Failed to login user.' });
   }
 };

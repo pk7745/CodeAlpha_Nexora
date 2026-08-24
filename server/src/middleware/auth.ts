@@ -17,11 +17,18 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log(`[AUTH_DEBUG] ${req.method} ${req.originalUrl} - authHeaderPresent=false`);
       return res.status(401).json({ error: 'Authentication required. No token provided.' });
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    let decoded: { userId: string };
+    try {
+      decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    } catch (verifyErr) {
+      console.log(`[AUTH_DEBUG] ${req.method} ${req.originalUrl} - authHeaderPresent=true, tokenVerified=false`);
+      return res.status(401).json({ error: 'Invalid or expired token.' });
+    }
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
@@ -29,9 +36,11 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
     });
 
     if (!user) {
+      console.log(`[AUTH_DEBUG] ${req.method} ${req.originalUrl} - authHeaderPresent=true, tokenVerified=true, userFound=false`);
       return res.status(401).json({ error: 'User account no longer exists.' });
     }
 
+    console.log(`[AUTH_DEBUG] ${req.method} ${req.originalUrl} - authHeaderPresent=true, tokenVerified=true, userFound=true`);
     req.user = user;
     next();
   } catch (err) {
