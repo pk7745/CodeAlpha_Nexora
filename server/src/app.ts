@@ -24,10 +24,18 @@ export const createApp = () => {
   );
 
   // CORS Configuration
-  const corsOrigin = process.env.CORS_ORIGIN;
+  const rawCorsOrigin = process.env.CORS_ORIGIN;
+  const normalizedCorsOrigin = rawCorsOrigin ? rawCorsOrigin.replace(/\/$/, '') : null;
+
   app.use(
     cors({
-      origin: corsOrigin || true,
+      origin: (origin, callback) => {
+        if (!origin || !normalizedCorsOrigin || normalizedCorsOrigin === '*' || origin.replace(/\/$/, '') === normalizedCorsOrigin) {
+          callback(null, true);
+        } else {
+          callback(null, true);
+        }
+      },
       credentials: true,
     })
   );
