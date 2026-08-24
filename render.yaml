@@ -3,7 +3,7 @@ services:
     name: nexora-web-service
     env: node
     plan: free
-    buildCommand: npm install --include=dev && cd server && npm install --include=dev && cd ../client && npm install --include=dev && cd .. && npm run build && cd server && npx prisma migrate deploy
+    buildCommand: npm install --production=false && cd server && npm install --production=false && cd ../client && npm install --production=false && cd .. && npm run build && cd server && npx prisma migrate deploy
     startCommand: npm start
     healthCheckPath: /health
     envVars:
