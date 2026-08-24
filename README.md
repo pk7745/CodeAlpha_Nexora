@@ -1,6 +1,6 @@
 # NEXORA — Project Management & Collaboration Platform
 
-Nexora is a full-stack, production-ready project management and team collaboration platform designed for modern product and software engineering teams. Built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, and Socket.IO, Nexora provides real-time task synchronization, strict Role-Based Access Control (RBAC), database-driven executive analytics, and a dark SaaS visual design system.
+Nexora is a full-stack project management and team collaboration platform designed for modern product and software engineering teams. Built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, and Socket.IO, Nexora provides real-time task synchronization, strict Role-Based Access Control (RBAC), database-backed analytics, and a dark SaaS visual design system.
 
 Developed for the **CodeAlpha Full Stack Development Internship**.
 
@@ -9,8 +9,8 @@ Developed for the **CodeAlpha Full Stack Development Internship**.
 ## 🔗 Project Links
 
 - **GitHub Repository:** https://github.com/pk7745/CodeAlpha_Nexora
-- **Live Demo:** Add the Render URL after deployment.
-- **API Health:** Add the deployed `/health` URL after deployment.
+- **Live Demo:** `https://YOUR-RENDER-SERVICE.onrender.com` *(Add after deployment)*
+- **API Health:** `https://YOUR-RENDER-SERVICE.onrender.com/health` *(Add after deployment)*
 
 ---
 
@@ -20,9 +20,9 @@ Developed for the **CodeAlpha Full Stack Development Internship**.
 - **Role-Based Access Control (RBAC)**: Fine-grained, server-side permission enforcement across four roles (`OWNER`, `ADMIN`, `MEMBER`, `VIEWER`).
 - **Interactive Drag-and-Drop Kanban Board**: Real-time position reordering and status column movement (`To Do`, `In Progress`, `In Review`, `Done`) powered by `@dnd-kit/core` with floating-point position ordering persisted to PostgreSQL.
 - **Slide-Over Task Drawer**: Inspect task details, update status, priority, assignee, due date, description, threaded comments, and project activity audit logs.
-- **Real-Time Updates via Socket.IO**: WebSocket room broadcasting (`project:{projectId}`) for real-time task creation, column shifts, edits, comments, and team membership updates.
+- **Real-Time Collaboration via Socket.IO**: WebSocket room broadcasting (`project:{projectId}`) for real-time task creation, column shifts, edits, comments, and team membership updates.
 - **In-App Notification Center**: Bell icon dropdown feed with unread counter badge, task assignment alerts, comment alerts, and `Mark all as read` functionality (`GET /api/notifications`, `PUT /api/notifications/read-all`).
-- **Executive Analytics Dashboard**: Database-driven KPI cards (Active Projects, Assigned Tasks, Completed Tasks, Overdue Tasks), interactive URL-filtered task navigation, and a Workspace Productivity Breakdown.
+- **Database-Backed Analytics Dashboard**: Interactive KPI cards (Active Projects, Assigned Tasks, Completed Tasks, Overdue Tasks), URL-filtered task navigation, and a Workspace Productivity Breakdown.
 - **Member Profiles & Productivity Summaries**: Slide-over member drawer displaying user role, active task counts, completed tasks, overdue items, and authorized shared project history.
 - **Global Server-Side Search (`Ctrl + K`)**: Modal search querying backend APIs for authorized projects, tasks (by key or title), and team members.
 
@@ -70,7 +70,7 @@ Nexora uses a decoupled monorepo architecture engineered for both separate devel
 
 ## 🔐 Role-Based Access Control (RBAC)
 
-Authorization is strictly enforced on the server via `server/src/middleware/authorize.ts` and controller-level checks:
+Authorization is strictly enforced server-side via `server/src/middleware/authorize.ts` and controller-level checks:
 
 | Capability | OWNER | ADMIN | MEMBER | VIEWER |
 | :--- | :---: | :---: | :---: | :---: |
@@ -228,6 +228,8 @@ npm run dev
 
 ## 🔑 Demo Credentials
 
+Demo credentials for local/testing purposes only:
+
 | Role | Email | Password | Permissions |
 | :--- | :--- | :--- | :--- |
 | **Owner** | `owner@nexora.io` | `Password123!` | Full admin & project creation/deletion rights |
@@ -239,7 +241,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing & Verification
+## 🧪 Testing
 
 Automated integration tests verify authentication, RBAC restrictions, task position persistence, comments ownership, search, and member profile access:
 
@@ -248,15 +250,15 @@ cd server
 npm test
 ```
 
-### Test Verification Summary
+### Verified Test Summary
 ```text
  RUN  v1.6.1 server
 
- ✓ src/tests/api.test.ts  (19 tests) 742ms
+ ✓ src/tests/api.test.ts  (19 tests) 725ms
 
  Test Files  1 passed (1)
       Tests  19 passed (19)
-   Duration  2.03s
+   Duration  1.96s
 ```
 
 ---
@@ -270,7 +272,7 @@ npm run build
 
 ---
 
-## ☁️ Render Single-Service Deployment Guide
+## ☁️ Render Deployment
 
 Nexora is configured to deploy on **Render** as a single Web Service backed by Render PostgreSQL using [`render.yaml`](render.yaml).
 
@@ -294,33 +296,21 @@ PORT=10000
 
 ---
 
-## 🌐 Environment Variables Reference
+## 🌐 Environment Variables
 
-| Variable | Description | Example Placeholder |
+| Variable | Purpose | Example Placeholder |
 | :--- | :--- | :--- |
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://USER:PASSWORD@HOST:5432/DB` |
 | `JWT_SECRET` | Secret key for JWT signing | `YOUR_PRODUCTION_JWT_SECRET_KEY` |
 | `CORS_ORIGIN` | Allowed origin for CORS & Socket.IO | `https://YOUR-RENDER-SERVICE.onrender.com` |
-| `NODE_ENV` | Environment mode (`development`/`production`) | `production` |
+| `NODE_ENV` | Runtime environment | `production` |
 | `PORT` | HTTP server port | `5000` |
 
 ---
 
-## 📊 Verification & Deployment Status
+## 🎯 CodeAlpha Internship
 
-- **Frontend Production Build**: **PASS** (`0 errors`)
-- **Backend Production Build**: **PASS** (`0 errors`)
-- **PostgreSQL Database Engine**: **PASS**
-- **Prisma Migrations**: **PASS** (`1 migration applied cleanly`)
-- **Automated Test Suite**: **PASS** (`19/19 Vitest integration tests passed`)
-- **Socket.IO Real-Time Engine**: **PASS**
-- **Render Configuration**: **READY** ([`render.yaml`](render.yaml))
-
----
-
-## 🎯 CodeAlpha Assignment Submission
-
-This project was built as part of the **CodeAlpha Full Stack Development Internship**.
+This project was developed as part of the **CodeAlpha Full Stack Development Internship**.
 
 - **Primary Requirement**: Full-stack project management platform with authentication, PostgreSQL database, project/task CRUD, and RBAC permissions.
 - **Bonus Requirement Achieved**: Real-time updates and in-app notifications using Socket.IO / WebSockets.
@@ -329,7 +319,7 @@ This project was built as part of the **CodeAlpha Full Stack Development Interns
 
 ## 🔮 Future Improvements
 
-- Email notification integration via SendGrid / Resend.
+- Email notification delivery via SendGrid / Resend.
 - File attachment uploads for tasks (S3 / Cloudinary integration).
 - Rich-text markdown editor for task descriptions.
 - Advanced sprint velocity charts and burndown metrics.

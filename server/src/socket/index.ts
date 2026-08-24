@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 let io: Server | null = null;
 
-const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_jwt_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'nexora_default_dev_secret';
 
 export const initSocket = (httpServer: HttpServer, corsOrigin: string) => {
   io = new Server(httpServer, {

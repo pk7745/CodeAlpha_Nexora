@@ -11,7 +11,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_jwt_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'nexora_default_dev_secret';
 
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {

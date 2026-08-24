@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { AuthRequest } from '../middleware/auth.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_jwt_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'nexora_default_dev_secret';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
 const registerSchema = z.object({
